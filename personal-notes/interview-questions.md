@@ -188,18 +188,27 @@ function level1() {
 
 ---
 
-## 10. Closure / Drawbacks
+## 10. Closure / Drawbacks / Applications
 
 **Answer:** A function that remembers variables from its outer scope.
 
 **Drawbacks:** Can cause memory leaks if not managed properly.
 
+**Applications:**
+- Data privacy/encapsulation
+- Function factories
+- Memoization
+- Event handlers
+- Callbacks
+
 ```javascript
+// Basic closure
 function createCounter() {
   let count = 0; // Private variable
   
   return {
     increment() { count++; },
+    decrement() { count--; },
     getCount() { return count; }
   };
 }
@@ -207,6 +216,45 @@ function createCounter() {
 const counter = createCounter();
 counter.increment();
 console.log(counter.getCount()); // 1
+
+// Application: Function factory
+function makeMultiplier(multiplier) {
+  return function(number) {
+    return number * multiplier;
+  };
+}
+
+const double = makeMultiplier(2);
+const triple = makeMultiplier(3);
+console.log(double(5)); // 10
+console.log(triple(5)); // 15
+
+// Application: Data privacy
+function bankAccount(initialBalance) {
+  let balance = initialBalance; // Private
+  
+  return {
+    deposit(amount) {
+      balance += amount;
+      return balance;
+    },
+    withdraw(amount) {
+      if (amount <= balance) {
+        balance -= amount;
+        return balance;
+      }
+      return 'Insufficient funds';
+    },
+    getBalance() {
+      return balance;
+    }
+  };
+}
+
+const account = bankAccount(1000);
+account.deposit(500);
+console.log(account.getBalance()); // 1500
+// Cannot access balance directly - it's private!
 ```
 
 ---
@@ -254,7 +302,42 @@ console.log(doubled); // [2, 4, 6]
 
 ---
 
-## 13. Currying
+## 13. Template String (Template Literals)
+
+**Answer:** String literals allowing embedded expressions using backticks.
+
+```javascript
+// Basic template string
+const name = 'Alice';
+const age = 25;
+console.log(`Hello, I'm ${name} and I'm ${age} years old`);
+
+// Multi-line strings
+const message = `
+  This is a
+  multi-line
+  string
+`;
+
+// Expression evaluation
+const a = 10, b = 20;
+console.log(`Sum: ${a + b}`); // Sum: 30
+
+// Tagged templates
+function highlight(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    return result + str + (values[i] ? `<strong>${values[i]}</strong>` : '');
+  }, '');
+}
+
+const product = 'laptop';
+const price = 999;
+console.log(highlight`Product: ${product}, Price: $${price}`);
+```
+
+---
+
+## 14. Currying
 
 **Answer:** Transforming a function with multiple arguments into a sequence of functions.
 
@@ -1079,6 +1162,189 @@ sessionStorage.setItem('temp', 'value');
 console.log(sessionStorage.getItem('temp'));
 ```
 
+### Set
+
+**Answer:** Collection of unique values (no duplicates).
+
+```javascript
+// Creating a Set
+const mySet = new Set();
+
+// Adding values
+mySet.add(1);
+mySet.add(2);
+mySet.add(2); // Duplicate, won't be added
+mySet.add('hello');
+
+console.log(mySet.size); // 3
+console.log(mySet.has(1)); // true
+
+// Iterating
+for (let item of mySet) {
+  console.log(item);
+}
+
+// Convert array to Set (removes duplicates)
+const numbers = [1, 2, 2, 3, 3, 4];
+const uniqueNumbers = new Set(numbers);
+console.log([...uniqueNumbers]); // [1, 2, 3, 4]
+
+// Set methods
+mySet.delete(1);
+mySet.clear(); // Removes all
+```
+
+### WeakSet and WeakMap
+
+**WeakSet:** Like Set but only holds objects, allows garbage collection
+**WeakMap:** Like Map but keys must be objects, allows garbage collection
+
+```javascript
+// WeakSet
+const weakSet = new WeakSet();
+let obj1 = { name: 'Alice' };
+let obj2 = { name: 'Bob' };
+
+weakSet.add(obj1);
+weakSet.add(obj2);
+
+console.log(weakSet.has(obj1)); // true
+
+// When obj1 is no longer referenced, it can be garbage collected
+obj1 = null;
+
+// WeakMap
+const weakMap = new WeakMap();
+let key = { id: 1 };
+
+weakMap.set(key, 'value');
+console.log(weakMap.get(key)); // 'value'
+
+// Key differences from Map/Set:
+// 1. Keys/values must be objects
+// 2. Not iterable
+// 3. No size property
+// 4. Allows garbage collection when references are removed
+```
+
+### Garbage Collection
+
+**Answer:** Automatic memory management that removes unused objects.
+
+**How it works:**
+- Mark and Sweep algorithm
+- Identifies unreachable objects
+- Frees memory automatically
+
+```javascript
+// Object is created
+let user = {
+  name: 'Alice',
+  age: 25
+};
+
+// Object is reachable (referenced by 'user')
+
+// Remove reference
+user = null;
+
+// Now the object is unreachable and will be garbage collected
+
+// Example: Circular references
+function createCircular() {
+  let obj1 = {};
+  let obj2 = {};
+  
+  obj1.ref = obj2;
+  obj2.ref = obj1;
+  
+  return obj1;
+}
+
+let circular = createCircular();
+// Even with circular references, modern GC can handle it
+circular = null; // Will be garbage collected
+
+// Memory leak example (closure holding reference)
+function createLeak() {
+  const largeData = new Array(1000000);
+  
+  return function() {
+    // This closure keeps largeData in memory
+    console.log(largeData.length);
+  };
+}
+
+const leak = createLeak(); // largeData stays in memory
+```
+
+### Pure and Impure Functions
+
+**Pure Function:** Same input always produces same output, no side effects
+**Impure Function:** May produce different outputs, has side effects
+
+```javascript
+// PURE FUNCTIONS
+// 1. Same input, same output
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(2, 3)); // Always 5
+
+// 2. No side effects
+function multiply(a, b) {
+  return a * b;
+}
+
+// 3. Doesn't modify external state
+function calculateTotal(items) {
+  return items.reduce((sum, item) => sum + item.price, 0);
+}
+
+// IMPURE FUNCTIONS
+// 1. Uses external variable
+let counter = 0;
+function incrementCounter() {
+  counter++; // Modifies external state
+  return counter;
+}
+
+// 2. Different output for same input
+function getRandomNumber() {
+  return Math.random(); // Different every time
+}
+
+// 3. Modifies input
+function addItem(arr, item) {
+  arr.push(item); // Mutates array
+  return arr;
+}
+
+// 4. Has side effects (I/O, API calls, etc.)
+function saveToDatabase(data) {
+  console.log('Saving...'); // Side effect
+  // database.save(data); // Side effect
+}
+
+// Making impure function pure
+// IMPURE
+function addItemImpure(arr, item) {
+  arr.push(item);
+  return arr;
+}
+
+// PURE
+function addItemPure(arr, item) {
+  return [...arr, item]; // Returns new array
+}
+
+const original = [1, 2, 3];
+const newArray = addItemPure(original, 4);
+console.log(original); // [1, 2, 3] - unchanged
+console.log(newArray); // [1, 2, 3, 4]
+```
+
 ---
 
 ## Summary
@@ -1089,6 +1355,16 @@ This document covers all the JavaScript interview topics from your handwritten n
 - Practical use cases
 - Common gotchas
 
-**Total Topics Covered:** 40+ core concepts
+**Total Topics Covered:** 50+ core concepts including:
+- Fundamentals (variables, data types, operators)
+- Functions (first-class, higher-order, pure/impure, closures)
+- Async Programming (callbacks, promises, async/await)
+- Scope & Hoisting
+- Event Handling & Delegation
+- Data Structures (Set, Map, WeakSet, WeakMap)
+- Memory Management (Garbage Collection, Memoization)
+- Modern Features (template strings, destructuring, optional chaining)
+- And much more!
 
 Keep practicing these concepts and refer back to this document for quick revision!
+
