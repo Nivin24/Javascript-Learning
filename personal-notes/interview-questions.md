@@ -361,7 +361,7 @@ console.log(curriedAdd(1)(2)(3)); // 6
 
 ---
 
-## 14. Callback Function
+## 15. Callback Function
 
 **Answer:** A function passed as an argument to another function.
 
@@ -379,7 +379,7 @@ fetchData(function(data) {
 
 ---
 
-## 15. Promise / State / Methods
+## 16. Promise / State / Methods
 
 **States:** Pending, Fulfilled, Rejected
 
@@ -398,7 +398,7 @@ promise
 
 ---
 
-## 16. What is Promise Chaining?
+## 17. What is Promise Chaining?
 
 **Answer:** Linking multiple promises together.
 
@@ -413,7 +413,7 @@ fetch('/api/user')
 
 ---
 
-## 17. async / await
+## 18. async / await
 
 **Answer:** Syntactic sugar for promises, makes async code look synchronous.
 
@@ -431,7 +431,7 @@ async function fetchUser() {
 
 ---
 
-## 18. Event Handling
+## 19. Event Handling
 
 **Answer:** Responding to user interactions.
 
@@ -450,7 +450,7 @@ document.addEventListener('keydown', function(event) {
 
 ---
 
-## 19. Event Bubbling / Capturing
+## 20. Event Bubbling / Capturing
 
 **Bubbling:** Event propagates from target to root
 **Capturing:** Event propagates from root to target
@@ -469,7 +469,7 @@ child.addEventListener('click', () => console.log('Child'), true);
 
 ---
 
-## 20. Propagation / Delegation
+## 21. Propagation / Delegation
 
 **stopPropagation():** Stops event from bubbling
 
@@ -492,7 +492,7 @@ document.getElementById('list').addEventListener('click', function(e) {
 
 ---
 
-## 21. Microtask / Macrotask
+## 22. Microtask / Macrotask
 
 **Microtasks:** Promises, queueMicrotask
 **Macrotasks:** setTimeout, setInterval, I/O
@@ -511,7 +511,7 @@ console.log('4');
 
 ---
 
-## 22. Spread Operator / Rest Parameter
+## 23. Spread Operator / Rest Parameter
 
 **Spread (...):** Expands array/object
 **Rest (...):** Collects arguments into array
@@ -531,7 +531,7 @@ console.log(sum(1, 2, 3, 4)); // 10
 
 ---
 
-## 23. NaN / isNaN
+## 24. NaN / isNaN
 
 **NaN:** "Not a Number" - result of invalid math operation
 
@@ -546,7 +546,7 @@ console.log(Number.isNaN('hello')); // false (stricter)
 
 ---
 
-## 24. What is difference between Map and Object?
+## 25. What is difference between Map and Object?
 
 **Map:** Key-value pairs, any type as key, maintains insertion order
 **Object:** String/Symbol keys only
@@ -567,7 +567,7 @@ console.log(map.get('name')); // Alice
 
 ---
 
-## 25. Object entries() / keys() / values()
+## 26. Object entries() / keys() / values()
 
 ```javascript
 const person = { name: 'Alice', age: 25, city: 'NYC' };
@@ -584,7 +584,7 @@ console.log(Object.entries(person));
 
 ---
 
-## 26. Callback Hell
+## 27. Callback Hell
 
 **Answer:** Nested callbacks creating pyramid of doom.
 
@@ -605,7 +605,7 @@ getData(function(a) {
 
 ---
 
-## 27. Arrow Function
+## 28. Arrow Function
 
 ```javascript
 // Regular function
@@ -627,7 +627,7 @@ const obj = {
 
 ---
 
-## 28. Memory Function
+## 29. Memoization (Memory Function)
 
 **Answer:** Caching function results (memoization).
 
@@ -656,7 +656,7 @@ console.log(expensiveCalc(5)); // 25 (from cache)
 
 ---
 
-## 29. Function b/w Method
+## 30. Function vs Method
 
 **Function:** Standalone
 **Method:** Function inside object
@@ -678,7 +678,7 @@ const person = {
 
 ---
 
-## 30. Default Parameter
+## 31. Default Parameter
 
 ```javascript
 function greet(name = 'Guest') {
@@ -691,7 +691,7 @@ greet('Alice'); // Hello, Alice
 
 ---
 
-## 31. Object / Methods / Destructuring
+## 32. Object / Methods / Destructuring
 
 ```javascript
 const person = {
@@ -718,7 +718,7 @@ console.log(city); // NYC
 
 ---
 
-## 32. null / undefined
+## 33. null / undefined
 
 **undefined:** Variable declared but not assigned
 **null:** Intentional absence of value
@@ -736,7 +736,7 @@ console.log(typeof null); // "object" (JavaScript bug)
 
 ---
 
-## 33. == / ===
+## 34. == / ===
 
 **==:** Compares values with type coercion
 **===:** Compares values and types (strict)
@@ -751,7 +751,7 @@ console.log(null === undefined); // false
 
 ---
 
-## 34. Key Word and Identifiers
+## 35. Keywords and Identifiers
 
 **Keywords:** Reserved words (if, for, function, etc.)
 **Identifiers:** Names for variables, functions
@@ -771,7 +771,7 @@ let $jquery = 30;
 
 ---
 
-## 35. Falsy and Truthy Values
+## 36. Falsy and Truthy Values
 
 **Falsy:** false, 0, "", null, undefined, NaN
 **Truthy:** Everything else
@@ -788,7 +788,7 @@ console.log(Boolean([])); // true
 
 ---
 
-## 36. Execution Context
+## 37. Execution Context
 
 **Answer:** Environment where JavaScript code is executed.
 
@@ -807,7 +807,7 @@ function test() {
 
 ---
 
-## 37. Prototypal and OOP Increment
+## 38. Prototype and OOP
 
 **Answer:** JavaScript uses prototypal inheritance.
 
@@ -826,7 +826,7 @@ alice.greet(); // Hello, I'm Alice
 
 ---
 
-## 38. map vs forEach
+## 39. map vs forEach
 
 **map:** Returns new array
 **forEach:** Returns undefined, just iterates
@@ -845,7 +845,7 @@ arr.forEach(x => console.log(x * 2));
 
 ---
 
-## 39. Generator Function
+## 40. Generator Function
 
 **Answer:** Function that can pause and resume execution.
 
@@ -864,7 +864,7 @@ console.log(gen.next().value); // 3
 
 ---
 
-## 40. Polyfills
+## 41. Polyfills
 
 **Answer:** Code that provides modern functionality on older browsers.
 
