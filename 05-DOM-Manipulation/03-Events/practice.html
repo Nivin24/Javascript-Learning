@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM Events Practice</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      background: lightblue;
+      margin: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>DOM Events Practice</h1>
+  
+  <button id="btn1">Click Me</button>
+  <button id="btn2">Change Color</button>
+  <button id="btn3">Toggle</button>
+  
+  <div class="box" id="box">Hover over me!</div>
+  
+  <input type="text" id="input" placeholder="Type something...">
+  <p id="output"></p>
+  
+  <script>
+    // Practice exercises here
+    document.getElementById("btn1").addEventListener("click", () => {
+      alert("Button 1 clicked!");
+    });
+    
+    document.getElementById("btn2").addEventListener("click", () => {
+      document.body.style.backgroundColor = 
+        `rgb(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`;
+    });
+    
+    let isVisible = true;
+    document.getElementById("btn3").addEventListener("click", () => {
+      let box = document.getElementById("box");
+      box.style.display = isVisible ? "none" : "flex";
+      isVisible = !isVisible;
+    });
+    
+    document.getElementById("input").addEventListener("input", (e) => {
+      document.getElementById("output").textContent = e.target.value;
+    });
+  </script>
+</body>
+</html>
